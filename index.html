@@ -254,13 +254,13 @@ const IMG={
 "lineup.png":"https://lh3.googleusercontent.com/pw/AP1GczNB4G0ztw5oEcCBoNP-I-ntmpw2l_VIYpV9wsSzdX7M-nb6ow24csPbK47nP0HJ3FPu6LhYBNy1LKqAxcAm5RVZGDmazpjegUM0yjc2EkY_xV8us2Y",
 "logo":"https://lh3.googleusercontent.com/pw/AP1GczOjRXmFMD7HJgXd31lJqsU1qQAkxboORj3YkBVHTd35F6CM4zCfPPSET9HiTosPNi7m8_OnVrl_0s17mVTGdYFrO3jVY-vnsylN5AVvkA6XQCc2pwc",
 };
-/* Order: local copy under images/ (same path as the key), then Google Photos, then a placeholder. */
+/* Page shows light 900px copies from images/web/; "full size" links open the originals in images/. Then Google Photos, then a placeholder. */
 const LOCAL=p=>"images/"+(/\.[a-z]+$/.test(p)?p:p+".png");
-const U=LOCAL, H=LOCAL;
+const U=p=>"images/web/"+p.replace(/\.png$/,"")+".webp", H=LOCAL;
 const ALBUM="https://photos.app.goo.gl/esBa8eQ2ZGPsrN2r9";
 document.addEventListener("error",e=>{
   const i=e.target;if(!(i instanceof HTMLImageElement))return;
-  const key=Object.keys(IMG).find(k=>i.src===new URL(LOCAL(k),location.href).href);
+  const key=Object.keys(IMG).find(k=>i.src===new URL(U(k),location.href).href);
   if(key&&!i.dataset.triedRemote){i.dataset.triedRemote="1";i.src=IMG[key]+"=w900";
     const a=i.closest("a");if(a)a.href=IMG[key]+"=w2000";return;}
   if(i.classList.contains("img-missing"))return;

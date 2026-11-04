@@ -1,6 +1,6 @@
 # images/
 
-Local copies of the brand-kit images. index.html loads these files first and falls back to Google Photos, then to a placeholder, so a missing file never breaks the page. logo.png and bags3d/rocky-mountain.png were converted from the album JPGs (Rocky with the white background removed). Filenames must match exactly:
+Brand-kit images. images/web/ holds 900px WebP copies the page displays; the PNG originals here open only from the "full size" links. If a file is missing the page falls back to Google Photos, then to a placeholder.
 
 - bags/pacific-stream.png
 - bags3d/pacific-stream.png
