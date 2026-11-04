@@ -92,6 +92,9 @@ button.copy.done{background:var(--bronze);color:#fff;border-color:var(--bronze)}
 .must .wrap{padding-block:26px;text-align:center}
 .must .big{font-family:"Bree Serif",Georgia,serif;direction:ltr;font-size:clamp(40px,10vw,88px);line-height:1.05;letter-spacing:.04em;margin:0}
 .must p{font-family:var(--f-ui);font-size:clamp(16px,2.4vw,20px);font-weight:500;margin:10px auto 0;max-width:60ch}
+.totop{position:fixed;inset-inline-end:max(16px,env(safe-area-inset-right,0px));bottom:max(16px,env(safe-area-inset-bottom,0px));width:48px;height:48px;border-radius:50%;border:2px solid var(--mast);background:var(--bronze);color:#121D27;font-size:22px;line-height:1;cursor:pointer;display:grid;place-items:center;box-shadow:0 4px 14px rgba(0,0,0,.25);opacity:0;pointer-events:none;transition:opacity .2s}
+.totop.show{opacity:1;pointer-events:auto}
+.totop:focus-visible{outline:2px solid var(--petrol);outline-offset:3px}
 footer{padding-block:48px;color:var(--muted);font-family:var(--f-ui);font-size:13px}
 @media (prefers-reduced-motion:no-preference){button.copy{transition:background .15s,color .15s}}
 </style>
@@ -204,6 +207,13 @@ footer{padding-block:48px;color:var(--muted);font-family:var(--f-ui);font-size:1
 </main>
 <footer class="wrap">תמונות המוצר במקור ובגודל מלא נמצאות גם ב<a class="open" href="https://photos.app.goo.gl/esBa8eQ2ZGPsrN2r9" target="_blank" rel="noopener">אלבום Google Photos</a>. הפצה: וט-מגן, היבואן הרשמי בישראל.</footer>
 
+<button type="button" class="totop" id="totop" aria-label="חזרה לראש העמוד">&#8593;</button>
+<script>
+(function(){const b=document.getElementById("totop");
+const t=()=>b.classList.toggle("show",window.scrollY>600);
+window.addEventListener("scroll",t,{passive:true});t();
+b.addEventListener("click",()=>window.scrollTo({top:0,behavior:window.matchMedia("(prefers-reduced-motion:reduce)").matches?"auto":"smooth"}));})();
+</script>
 <script>
 const IMG={
 "bags/pacific-stream.png":"https://lh3.googleusercontent.com/pw/AP1GczMR3H1bfXk71P_wFHS4SIpE1wclVty0FzKBqzfixfPJsBFi98dShci9TPlQg9C6kphbrF6TVWNhwyIdoVg1RlXnqPzcdOMNfBJxC9-RYoY2idSPSVs",
