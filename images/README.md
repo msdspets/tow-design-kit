@@ -1,6 +1,6 @@
 # images/
 
-Local copies of the brand-kit images. index.html loads Google Photos first and falls back to these files, so this folder never blocks the page. Filenames must match exactly:
+Local copies of the brand-kit images. index.html loads these files first and falls back to Google Photos, then to a placeholder, so a missing file never breaks the page. logo.png and bags3d/rocky-mountain.png were converted from the album JPGs (Rocky with the white background removed). Filenames must match exactly:
 
 - bags/pacific-stream.png
 - bags3d/pacific-stream.png
