@@ -254,11 +254,9 @@ const IMG={
 "lineup.png":"https://lh3.googleusercontent.com/pw/AP1GczNB4G0ztw5oEcCBoNP-I-ntmpw2l_VIYpV9wsSzdX7M-nb6ow24csPbK47nP0HJ3FPu6LhYBNy1LKqAxcAm5RVZGDmazpjegUM0yjc2EkY_xV8us2Y",
 "logo":"https://lh3.googleusercontent.com/pw/AP1GczOjRXmFMD7HJgXd31lJqsU1qQAkxboORj3YkBVHTd35F6CM4zCfPPSET9HiTosPNi7m8_OnVrl_0s17mVTGdYFrO3jVY-vnsylN5AVvkA6XQCc2pwc",
 };
-/* Google Photos links can expire. Order: Google, then a local copy in the repo (same path as the key), then a placeholder. */
-const LOCAL=p=>/\.[a-z]+$/.test(p)?p:p+".png";
-/* Sizing works for both hosts: Cloudinary gets a transform in the path, Google Photos a =wN suffix. */
-const SZ=(u,w)=>u.includes("res.cloudinary.com")?u.replace("/image/upload/","/image/upload/f_auto,q_auto,w_"+w+"/"):u+"=w"+w;
-const U=p=>IMG[p]?SZ(IMG[p],900):LOCAL(p), H=p=>IMG[p]?SZ(IMG[p],2000):LOCAL(p);
+/* Google Photos links can expire. Order: Google, then a local copy under images/ (same path as the key), then a placeholder. */
+const LOCAL=p=>"images/"+(/\.[a-z]+$/.test(p)?p:p+".png");
+const U=p=>IMG[p]?IMG[p]+"=w900":LOCAL(p), H=p=>IMG[p]?IMG[p]+"=w2000":LOCAL(p);
 const ALBUM="https://photos.app.goo.gl/esBa8eQ2ZGPsrN2r9";
 document.addEventListener("error",e=>{
   const i=e.target;if(!(i instanceof HTMLImageElement))return;
