@@ -1,0 +1,308 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>ערכת מותג Taste of the Wild</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Suez+One&family=Frank+Ruhl+Libre:wght@400;500;700&family=Bree+Serif&family=Source+Serif+4:wght@400;600&family=Rubik:wght@400;500;600&display=swap">
+<style>
+/* Layout: ink masthead with the seal, then field-guide sections; each bag is a specimen card with its sampled colour. */
+:root{
+  --bg:#F7F5F0; --surface:#FFFFFF; --ink:#121D27; --muted:#5B6670; --line:#E3DFD5;
+  --bronze:#A8823A; --petrol:#0F5167; --mast:#121D27; --mast-fg:#F7F5F0; --chip:#EFEBE2;
+  --f-display:"Suez One","Bree Serif",Georgia,serif;
+  --f-body:"Frank Ruhl Libre","Source Serif 4",Georgia,serif;
+  --f-ui:"Rubik","Segoe UI",Arial,sans-serif;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#0E151C; --surface:#16212B; --ink:#EDE8DD; --muted:#9AA6B1; --line:#26333F;
+  --bronze:#C9A25A; --petrol:#5FA9C2; --mast:#0A1016; --chip:#1E2B37; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0E151C; --surface:#16212B; --ink:#EDE8DD; --muted:#9AA6B1; --line:#26333F;
+  --bronze:#C9A25A; --petrol:#5FA9C2; --mast:#0A1016; --chip:#1E2B37; color-scheme:dark}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:17px;line-height:1.6;direction:rtl}
+.wrap{max-width:1120px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+header.mast{background:var(--mast);color:var(--mast-fg);border-bottom:5px solid #A8823A}
+header.mast .wrap{padding-block:40px 34px;display:flex;flex-wrap:wrap;gap:28px;align-items:center;justify-content:space-between}
+header.mast img{width:min(320px,80vw)}
+header.mast h1{font-family:var(--f-display);font-weight:400;font-size:clamp(28px,4.5vw,44px);line-height:1.15;margin:0 0 8px;text-wrap:balance}
+header.mast p{margin:0;max-width:52ch;color:#C8CED4;font-size:16px}
+nav.toc{display:flex;flex-wrap:wrap;gap:8px;margin-top:18px}
+nav.toc a{font-family:var(--f-ui);font-size:13px;color:var(--mast-fg);text-decoration:none;border:1px solid #3A4754;border-radius:999px;padding:5px 12px}
+nav.toc a:hover,nav.toc a:focus-visible{border-color:#A8823A;outline:none}
+section{padding-block:48px 8px}
+h2{font-family:var(--f-display);font-weight:400;font-size:30px;margin:0 0 6px;text-wrap:balance}
+.lede{color:var(--muted);margin:0 0 24px;max-width:65ch}
+h3{font-family:var(--f-display);font-weight:400;font-size:21px;margin:28px 0 12px}
+.grid{display:grid;gap:16px}
+.g-logos{grid-template-columns:repeat(auto-fill,minmax(240px,1fr))}
+.g-sw{grid-template-columns:repeat(auto-fill,minmax(170px,1fr))}
+.g-bags{grid-template-columns:repeat(auto-fill,minmax(250px,1fr))}
+.g-cans{grid-template-columns:repeat(auto-fill,minmax(180px,1fr))}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:14px;overflow:hidden;min-width:0}
+.logo-tile{display:grid;place-items:center;aspect-ratio:16/9;padding:20px;max-width:100%}
+.logo-tile img{max-height:100%;object-fit:contain}
+.cap{padding:12px 14px;font-family:var(--f-ui);font-size:14px;display:flex;justify-content:space-between;gap:8px;align-items:center;flex-wrap:wrap}
+.cap small{color:var(--muted)}
+a.open{color:var(--petrol);font-family:var(--f-ui);font-size:13px}
+.sw{height:96px}
+.sw-body{padding:10px 12px 12px;font-family:var(--f-ui);font-size:14px;display:grid;gap:4px}
+.sw-body b{font-weight:600}
+.sw-body span{color:var(--muted);font-size:13px}
+button.copy{font-family:var(--f-ui);font-size:13px;background:var(--chip);color:var(--ink);border:1px solid var(--line);border-radius:8px;padding:4px 9px;cursor:pointer;direction:ltr;justify-self:start;font-variant-numeric:tabular-nums}
+button.copy:hover{border-color:var(--bronze)}
+button.copy:focus-visible{outline:2px solid var(--bronze);outline-offset:2px}
+button.copy.done{background:var(--bronze);color:#fff;border-color:var(--bronze)}
+.bag{display:grid;grid-template-rows:auto auto 1fr}
+.bag .pic{background:var(--chip);display:grid;place-items:center;aspect-ratio:1/1;max-width:100%;position:relative}
+.bag .pic img{width:88%;height:88%;object-fit:contain}
+.bag .band{height:14px}
+.bag .info{padding:14px;display:grid;gap:6px;align-content:start}
+.bag .en{font-family:"Bree Serif",Georgia,serif;font-size:19px;direction:ltr;text-align:right}
+.bag .he{font-size:15px;color:var(--muted);line-height:1.4}
+.bag .row{display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin-top:4px}
+.bag .cname{font-family:var(--f-ui);font-size:14px;font-weight:600}
+.tag{font-family:var(--f-ui);font-size:12px;border-radius:999px;padding:2px 9px;background:var(--chip);color:var(--muted)}
+.filters{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:18px}
+.filters button{font-family:var(--f-ui);font-size:14px;border:1px solid var(--line);background:var(--surface);color:var(--ink);border-radius:999px;padding:6px 14px;cursor:pointer}
+.filters button[aria-pressed="true"]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.filters button:focus-visible{outline:2px solid var(--bronze);outline-offset:2px}
+.viewtoggle{margin-inline-start:auto}
+.can .pic{aspect-ratio:11/10;display:grid;place-items:center;background:var(--chip);max-width:100%}
+.can .pic img{width:90%;object-fit:contain}
+.can .info{padding:12px;display:grid;gap:4px}
+.can .en{font-family:"Bree Serif",Georgia,serif;font-size:16px;direction:ltr;text-align:right}
+.can .he{font-size:14px;color:var(--muted);line-height:1.4}
+.font-card{padding:20px;display:grid;gap:8px}
+.font-card .sample{font-size:34px;line-height:1.2}
+.font-card .meta{font-family:var(--f-ui);font-size:14px;color:var(--muted)}
+.g-fonts{grid-template-columns:repeat(auto-fill,minmax(300px,1fr))}
+.msg{padding:16px 18px;display:flex;gap:14px;justify-content:space-between;align-items:flex-start}
+.msg p{margin:0;min-width:0}
+.g-msg{grid-template-columns:repeat(auto-fill,minmax(320px,1fr))}
+.rules{display:grid;gap:16px;grid-template-columns:repeat(auto-fit,minmax(280px,1fr))}
+.rules .card{padding:18px 20px}
+.rules h4{margin:0 0 8px;font-family:var(--f-ui);font-size:15px}
+.rules ul{margin:0;padding-inline-start:20px}
+.note{font-family:var(--f-ui);font-size:14px;color:var(--muted);background:var(--surface);border:1px dashed var(--line);border-radius:12px;padding:12px 16px;margin-top:16px}
+.lineup{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:16px;margin-top:8px}
+.must{background:var(--bronze);color:#121D27;border-bottom:5px solid #121D27}
+.must .wrap{padding-block:26px;text-align:center}
+.must .big{font-family:"Bree Serif",Georgia,serif;direction:ltr;font-size:clamp(40px,10vw,88px);line-height:1.05;letter-spacing:.04em;margin:0}
+.must p{font-family:var(--f-ui);font-size:clamp(16px,2.4vw,20px);font-weight:500;margin:10px auto 0;max-width:60ch}
+footer{padding-block:48px;color:var(--muted);font-family:var(--f-ui);font-size:13px}
+@media (prefers-reduced-motion:no-preference){button.copy{transition:background .15s,color .15s}}
+</style>
+
+</head>
+<body>
+<header class="mast">
+  <div class="wrap">
+    <div>
+      <h1>ערכת מותג Taste of the Wild</h1>
+      <p>לוגואים, צבעי המותג, צבע כל שקית, פונטים, תמונות מוצר ומסרים. כל קוד צבע ושם אפשר להעתיק בלחיצה.</p>
+      <nav class="toc" aria-label="ניווט">
+        <a href="#logos">לוגואים</a><a href="#brand-colors">צבעי מותג</a><a href="#bags">צבעי השקיות</a><a href="#cans">פחיות</a><a href="#fonts">פונטים</a><a href="#messages">מסרים</a><a href="#rules">כללים</a>
+      </nav>
+    </div>
+    <img data-img="logo" alt="לוגו Taste of the Wild" style="background:#fff;border-radius:12px;padding:12px">
+  </div>
+</header>
+
+<aside class="must" role="note" aria-label="חובה בכל תוכן">
+  <div class="wrap">
+    <p class="big">MADE IN USA</p>
+    <p>חובה: בכל סרטון, פוסט, קרוסלה וסטורי של Taste of the Wild חייב להופיע המשפט MADE IN USA.</p>
+  </div>
+</aside>
+
+<main class="wrap">
+
+<section id="logos">
+  <h2>לוגואים</h2>
+  <p class="lede">לשמירה: לחיצה ימנית על התמונה ואז "שמירת תמונה בשם" (בטלפון: לחיצה ארוכה). קובצי הלוגו המלאים (לבן, נייבי) נמצאים אצל וט-מגן לפי בקשה. הלוגו הוא איור נעול. לא משנים צבעים, לא מותחים ולא כותבים מחדש את המילים בפונט אחר.</p>
+  <div class="grid g-logos">
+    <figure class="card" style="margin:0"><div class="logo-tile" style="background:#FFFFFF"><img data-img="logo" alt="לוגו Taste of the Wild"></div>
+      <figcaption class="cap"><span>לוגו צבעוני <small>לרקע בהיר</small></span><a class="open" data-href="logo" target="_blank" rel="noopener">גודל מלא</a></figcaption></figure>
+  </div>
+</section>
+
+<section id="brand-colors">
+  <h2>צבעי המותג</h2>
+  <p class="lede">שתי קבוצות. צבעי הלוגו מתאימים לסושיאל ולכל מקום שהלוגו מופיע בו. צבעי האתר מתאימים לכפתורים, כותרות ורקעים דיגיטליים. עדיף לא לערבב בין השתיים באותו עיצוב.</p>
+  <h3>צבעי הלוגו</h3>
+  <div class="grid g-sw" id="sw-logo"></div>
+  <h3>צבעי האתר</h3>
+  <div class="grid g-sw" id="sw-ui"></div>
+</section>
+
+<section id="bags">
+  <h2>צבעי השקיות</h2>
+  <p class="lede">לכל מתכון צבע משלו בפס התחתון של השקית. לשווקים אין שמות רשמיים לצבעים, ולכן השמות כאן תיאוריים. קוד הצבע נדגם מהשקית עצמה.</p>
+  <div class="filters" role="group" aria-label="סינון">
+    <button type="button" data-f="all" aria-pressed="true">הכל</button>
+    <button type="button" data-f="dog" aria-pressed="false">כלבים</button>
+    <button type="button" data-f="puppy" aria-pressed="false">גורים</button>
+    <button type="button" data-f="cat" aria-pressed="false">חתולים</button>
+    <button type="button" class="viewtoggle" id="view3d" aria-pressed="false">שקית בתלת-ממד</button>
+  </div>
+  <div class="grid g-bags" id="bag-grid"></div>
+  <h3>כל הסדרה ביחד</h3>
+  <div class="lineup"><img data-img="lineup.png" alt="כל שקיות Taste of the Wild בשורה"></div>
+</section>
+
+<section id="cans">
+  <h2>שימורים לכלבים</h2>
+  <p class="lede">פחיות 390 גרם עם רוטב. צבע הפחית תואם לצבע השקית של אותו מתכון.</p>
+  <div class="grid g-cans" id="can-grid"></div>
+</section>
+
+<section id="fonts">
+  <h2>פונטים</h2>
+  <p class="lede">הפונטים של המותג באנגלית הם Minion Pro ו-ITC Souvenir, ושניהם בתשלום. לעבודה יומיומית יש חלופות חינמיות. כל אלה קיימים ב-Canva וב-Google Fonts.</p>
+  <div class="grid g-fonts">
+    <div class="card font-card"><div class="sample" style="font-family:'Suez One',serif">אוכל עם טעם של טבע</div>
+      <div class="meta">Suez One · כותרות בעברית</div><button class="copy" type="button" data-copy="Suez One">Suez One</button></div>
+    <div class="card font-card"><div class="sample" style="font-family:'Frank Ruhl Libre',serif;font-size:26px">בשר טרי הוא המרכיב הראשון בכל מתכון.</div>
+      <div class="meta">Frank Ruhl Libre · טקסט רץ בעברית</div><button class="copy" type="button" data-copy="Frank Ruhl Libre">Frank Ruhl Libre</button></div>
+    <div class="card font-card"><div class="sample" style="font-family:'Bree Serif',serif;direction:ltr;text-align:right">Taste of the Wild</div>
+      <div class="meta">Bree Serif · כותרות באנגלית, במקום ITC Souvenir</div><button class="copy" type="button" data-copy="Bree Serif">Bree Serif</button></div>
+    <div class="card font-card"><div class="sample" style="font-family:'Rubik',sans-serif;font-size:24px">טקסט קטן, כתוביות לסרטון</div>
+      <div class="meta">Rubik · כתוביות ושכבות טקסט קטנות</div><button class="copy" type="button" data-copy="Rubik">Rubik</button></div>
+  </div>
+  <p class="note">המותג כולו בפונט עם סריפים (קצוות קטנים בסוף האות). לכותרות עדיף Suez One. Rubik שמור לכתוביות קטנות בלבד.</p>
+</section>
+
+<section id="messages">
+  <h2>מסרים שאפשר לכתוב</h2>
+  <p class="lede">אלה הטענות המאושרות על המותג בישראל. אפשר להעתיק ולנסח מחדש בשפה שלך.</p>
+  <div class="grid g-msg" id="msg-grid"></div>
+</section>
+
+<section id="rules">
+  <h2>כללים</h2>
+  <div class="rules">
+    <div class="card"><h4>כן</h4><ul>
+      <li><b>בכל סרטון, פוסט, קרוסלה וסטורי: המשפט MADE IN USA</b></li>
+      <li>הלוגו על רקע נקי, עם מרווח סביבו</li>
+      <li>שם המותג באנגלית כמו שהוא: Taste of the Wild</li>
+      <li>בעברית: טייסט אוף דה ווילד</li>
+      <li>כשמזכירים מתכון, לציין גם את שמו באנגלית (Pacific Stream וכו')</li>
+      <li>אתר: tasteofthewild.co.il</li>
+    </ul></div>
+    <div class="card"><h4>לא</h4><ul>
+      <li>לא לכתוב פרוביוטיקה, חיידקים חיים או K9 Strain. בישראל יש פרה-ביוטיקה בלבד</li>
+      <li>לא להשתמש ב-PREY ולא ב-Raw Grain. אינם נמכרים בישראל</li>
+      <li>לא לצבוע את הלוגו מחדש ולא לחתוך את החותם</li>
+      <li>לא להבטיח ריפוי של מחלה או בעיה רפואית</li>
+    </ul></div>
+  </div>
+</section>
+
+</main>
+<footer class="wrap">תמונות המוצר במקור ובגודל מלא נמצאות גם ב<a class="open" href="https://photos.app.goo.gl/esBa8eQ2ZGPsrN2r9" target="_blank" rel="noopener">אלבום Google Photos</a>. הפצה: וט-מגן, היבואן הרשמי בישראל.</footer>
+
+<script>
+const IMG={
+"bags/pacific-stream.png":"https://lh3.googleusercontent.com/pw/AP1GczMR3H1bfXk71P_wFHS4SIpE1wclVty0FzKBqzfixfPJsBFi98dShci9TPlQg9C6kphbrF6TVWNhwyIdoVg1RlXnqPzcdOMNfBJxC9-RYoY2idSPSVs",
+"bags3d/pacific-stream.png":"https://lh3.googleusercontent.com/pw/AP1GczMA9L3RcYsA0BC2rbCHoSYF7CWTPcMoBQz5Tmgk31khDY3cAnMPiiPagX21nb3Ew39hhQrNwQbYKGUmAFlF1WBQbLJv1tDbeWXxHHwU7nnBJwztE_Y",
+"bags/high-prairie.png":"https://lh3.googleusercontent.com/pw/AP1GczN1m10ShTQoNJ2JZCrK13_rPyWL3km2imuhFid3KMTbgz0sXelbBLfPbelKYSriwljdECC1YECSFpuYkViOlIT6v3U5Ua4dh8cSU7yS_YXqaDsKeZo",
+"bags3d/high-prairie.png":"https://lh3.googleusercontent.com/pw/AP1GczP8QVNh6mAxf-RaS-DARwDHfJKEAdsIG_Y_BUGcgUEo0P0oQbFJf5jOXgdia_fjylGYaOJmNvHGEcKJSlV2dUmq_wV4SEcrXXOta7ZcUeKGzcY-ViQ",
+"bags/sierra-mountain.png":"https://lh3.googleusercontent.com/pw/AP1GczOV-J-PnlyhtXSGp3b4W7pMVuU2vO1aqjLqN0DJNEJB_4xEbARQdDTVdGwaqX5HgMsTzTNQmmqVOI9uIkvt73y9nSbmA4Ro6bhlMhbwRFiAZj5_6lU",
+"bags3d/sierra-mountain.png":"https://lh3.googleusercontent.com/pw/AP1GczOvZquhE2eel8z7zK_x3k5TrqN5sRIQLcXRs670VZ3Yi2bD-5ulru5j80njpXK6k4Y3_h9kMw2u-SzHsnTZ41kDINWlW7_1yiVwKBmN2ZOP1YgnEDc",
+"bags/southwest-canyon.png":"https://lh3.googleusercontent.com/pw/AP1GczPDnCwOP3We3SCUMPEZF9h781jhkjLtumC4Oz9O0S5Zu1pM9tTPN3iJC_6zXIj0WNo1EzkICZdAoRYVRahtuZSu5P3kJwwyPiNogmOaeZafYX45MTQ",
+"bags3d/southwest-canyon.png":"https://lh3.googleusercontent.com/pw/AP1GczNbSCmuQEASqlI0KGoPFMXyn8lSMO3y9Ujddx6gnx_z5H0NtbRMpz10qfb3Wx8WOU7wvM3k-1zxOD_ZPkfteFTY-OoC0ftcf-HC-yk1VyxXDtXjC1I",
+"bags/pine-forest.png":"https://lh3.googleusercontent.com/pw/AP1GczMmH6NT-hcA46kVyuNNEwZ02jEXScD5Kx0w_rrimMjalnI_N8vG9c0d5SwwiRcOJQE54mqZ9krgf9RPnDLtG9LxFl3P4bLymc4wmtJpZjFzGYytvXw",
+"bags3d/pine-forest.png":"https://lh3.googleusercontent.com/pw/AP1GczOX-189mMfv4N4dLObGCJGWpLqPExO_zJCCFDwE4KbPUYmvdSFX0JRiSH85f6W6OeY4cnVUAfQcYEIs8PZ45JDj0YUsPOB3SOWgPF4hQCYyIRJNe4M",
+"bags/appalachian-valley.png":"https://lh3.googleusercontent.com/pw/AP1GczNW1jeyU7-hEe8CNQEh2QEsWBuDmCHMAjYQX78XngbyJIMBh8vxUE0qFnyXfhgMRJcPymu4oh9F6VoktVCXZcHKozUBY1wZR3ihugdnycPKjcFv4wg",
+"bags3d/appalachian-valley.png":"https://lh3.googleusercontent.com/pw/AP1GczMBCuVr39WwMSM0x5hp3bwaCCWBLEv5UCOQkln-LEchYtIk7yfpy1PIoVC_V7DxXiayuznzrVlSlLNqWQVCzSrCkMAm7yBg35mjPyJjwI094NtGiyg",
+"bags/wetlands.png":"https://lh3.googleusercontent.com/pw/AP1GczP_RMpaR7Xh6RBtJ4_7loCuw2v6A85KpOvKo9dV4Vy8F1TTyzzV9ka9yEzcezeVKNmIZVvMb4vCuwUc78X-taSy5Vjhk0e0CBvzd6mYVe8IbaUBNy0",
+"bags3d/wetlands.png":"https://lh3.googleusercontent.com/pw/AP1GczNmXKdcACYp2esjTSbXUmOFPK3RRN-phwdCTv9SbgLPLm_SZRoH_Yu36WwrjLTDE-e3GxAUG2y1cJujKFg9cmJdBeQCOv6rf7w_udDiNSbhVmJLx9g",
+"bags/high-prairie-puppy.png":"https://lh3.googleusercontent.com/pw/AP1GczN5mtH88Ss-Qw5cFB77dotfbiJ5aqIoL5kOpaaCezYF3f93VcatyOo5xEJAGWMoF9oVH5xy72e25ei4v7xf-hcKDY0KKOsVywVoAUnMj1MpMIcHpSU",
+"bags3d/high-prairie-puppy.png":"https://lh3.googleusercontent.com/pw/AP1GczPDctVIobqVWiNOgYi9ZaubRFy05dmywnbua0ZX9UkuBcFPmsoil40QrjD1TJ6w3hSLeChBs5GU-7D-04B8cvkYNwQmXiB3cr3EGFSim3WXg5KIcWo",
+"bags/pacific-stream-puppy.png":"https://lh3.googleusercontent.com/pw/AP1GczMPN_jOgFBLSp7eUmYYzsvXnADPTW_GPUHU4eL09C2vN-WyaIN8DCNeQNm39XaMId6tld5v-jpViZ9yuFWayTq4l6ZTY_S93l7UICf3YU_vs_os39U",
+"bags3d/pacific-stream-puppy.png":"https://lh3.googleusercontent.com/pw/AP1GczNTZnpFGJtKK5s1SbKEC1ozb7GFenCuO85pWJJQwRXYYtFzdkPD-vANzBgtUicT6LEwaP4KdIGojXO5BAaj07EjKUaczTAUazq5DnbgTemhqTCRQyg",
+"bags/rocky-mountain.png":"https://lh3.googleusercontent.com/pw/AP1GczNdBMorwY3X1iQ0CDjhw1te2fuAU-wV2rEDzKr39vFZ-r6T-IGH7YCHB1AkD9NX-tCkXTRFtxiMBJLxjnc7TdgpZd0T6ySF2HIYcMU8S9l9GrmhQ2U",
+"bags3d/rocky-mountain.png":"https://lh3.googleusercontent.com/pw/AP1GczPDvB2s3gCxqSogLC9O7u41DnuXEipi8wCVHNRQAw-asg8VHgR5BdhMxM_yiAI38InyBbGkz69Zh2VOd6DQ_jj-4Zwk_LhnppT-InC0Ywb5wGjZFfc",
+"bags/canyon-river.png":"https://lh3.googleusercontent.com/pw/AP1GczN7LLXMcQvfsSVX8OHVkXn2ma39l1Y62VrhU4RnwmoaLwIC_53IMT9evFm0E5ssIgKWhw7W56L5gMlvtqPRu7OLUXX33ySLZoDV54KqbEcaF7Ia7D8",
+"bags3d/canyon-river.png":"https://lh3.googleusercontent.com/pw/AP1GczNxv7zREJ0YDXtdB4-QRWvhtt2iHyj5u4yRLCDMGuGKdKRzO8bH2b7W2NDLo6DMVNGzO8M7poQRUPI3-Ln66XCHZjmAYgooaernW7xW8Jaj1KFue-k",
+"bags/lowland-creek.png":"https://lh3.googleusercontent.com/pw/AP1GczNNyGA1FEysNFIiQAU9gB3iZy76p76IiS6HD0C5W0nNMlQ4omXcZGWwg2UX8uDmk7pu5nbOt_cGSAvyM0Zu5d1LH9T8EJxgetUPZs14hqLAMyWB3cA",
+"bags3d/lowland-creek.png":"https://lh3.googleusercontent.com/pw/AP1GczP4W64nyssA3OD6rixQs8SswJzObew8lMiZXAQcpPdiXmGVMUaUyHkSAAvnJ3j0RRtmyFIrEUpqBs927qkReKUZp8Crv0RTQKHmGgy8a6Ihr4jrJ8E",
+"cans/pacific-stream.png":"https://lh3.googleusercontent.com/pw/AP1GczNmY3oetmwIqcyOs4iOr3_rR6yL59l4hw1RBghNr50Xn1WNrBCb21EQps2PBILKuoude5b4n9ri2fXKZiC50u8L2vWpZSX75apn1pbaLzG2m7L7fcs",
+"cans/sierra-mountain.png":"https://lh3.googleusercontent.com/pw/AP1GczPrjZowFOnNqLLP48JbiTgOk0BBAgyqrgFea0BSjtexPP4iy3SaZvUYZIs34dsbsk3CqyC2KyOyI6ozEjYCWFCckK6jGYJBYXHg4Ez58kaPTCIMiyc",
+"cans/southwest-canyon.png":"https://lh3.googleusercontent.com/pw/AP1GczOSd1sz8d_A2kzFPDb1NLxPLsFnBRLINFzl4_k22K3uw6IO76MWnRWgT8eEGQFw5jQZAkpbBkWEN-ZDIetfq1qYMOgC0CqAgapkdxgFBbg0R4yOROk",
+"cans/wetlands.png":"https://lh3.googleusercontent.com/pw/AP1GczN30IjgE6XENmXrquy8Ilr2mcu6_EnVdP8xlPujInfS34dGCfQOXyClgUOhtOOKpEf3CYFes8cKTROTZ8lVVuVNlN4GiRI5sjoqMn_RXyGtYO1hHCs",
+"cans/salmon-turkey.png":"https://lh3.googleusercontent.com/pw/AP1GczNTn0D8tdqgMTkZp3WP7fv-O9zdEY_innL2_7YEU2HzEPE1s-j0pKPxsswPLdMwU3gK1ymL4x0I4szWvNFl04vLve-e6oAu_vQlCdg-qm8O62Ngl_M",
+"cans/white-fish-tuna.png":"https://lh3.googleusercontent.com/pw/AP1GczP2fSzoRHq1y_8yY3BPvxYRt7quuGiqk_Du870dBo51IiYf8AiRiPCB69YPzcgOeaMf9exbgbiM-hmg5SwIog1EsGZYVvxLHPldeCtAaL3Hu_u9HGw",
+"cans/puppy-beef.png":"https://lh3.googleusercontent.com/pw/AP1GczMp_-G2KfMt_1R1Xcb5C_8aFK0VyK5PNcAk2maELkzrygp_eEq_rIewL9RMyP937G0XIa3BIcO5XXndxiMgkJj3xxR1XyfsRICSoIPgyqlmUtSkUIM",
+"lineup.png":"https://lh3.googleusercontent.com/pw/AP1GczNB4G0ztw5oEcCBoNP-I-ntmpw2l_VIYpV9wsSzdX7M-nb6ow24csPbK47nP0HJ3FPu6LhYBNy1LKqAxcAm5RVZGDmazpjegUM0yjc2EkY_xV8us2Y",
+"logo":"https://lh3.googleusercontent.com/pw/AP1GczOjRXmFMD7HJgXd31lJqsU1qQAkxboORj3YkBVHTd35F6CM4zCfPPSET9HiTosPNi7m8_OnVrl_0s17mVTGdYFrO3jVY-vnsylN5AVvkA6XQCc2pwc",
+};
+const U=p=>IMG[p]+"=w900", H=p=>IMG[p]+"=w2000";
+</script>
+<script>
+const logoColors=[
+ ["#A8823A","ברונזה","החותם בלוגו"],["#111820","דיו","טקסט הלוגו"],["#0F1F3D","נייבי","רקע ללוגו לבן"],["#FFFFFF","לבן","רקע ללוגו צבעוני"]];
+const uiColors=[
+ ["#0F5167","פטרול","הצבע הראשי, כפתורים"],["#121D27","כחול-שחור","טקסט וכותרות"],["#F6AE1C","צהוב-זהב","הדגשה, כלבים"],
+ ["#B3DD97","ירוק מרווה","הדגשה, חתולים"],["#A57C37","חום-זהב","קו הפרדה"],["#FEEDBA","חול","רקע משני"]];
+const bags=[
+ ["pacific-stream","Pacific Stream","פסיפיק סטרים · סלמון מעושן","dog","#A6B7CB","תכלת נהר"],
+ ["high-prairie","High Prairie","היי פריירי · ביזון ואייל צלוי","dog","#D7B948","צהוב ערבה"],
+ ["sierra-mountain","Sierra Mountain","סיירה מאונטן · כבש צלוי","dog","#999BBE","סגול לבנדר"],
+ ["southwest-canyon","Southwest Canyon","סאות'ווסט קניון · חזיר בר","dog","#8D1821","אדום בורדו"],
+ ["pine-forest","Pine Forest","פיין פורסט · אייל ועדשים","dog","#9A8B55","ירוק זית"],
+ ["wetlands","Wetlands","ווטלנדס · ברווז בר","dog","#A6A299","אפור אבן"],
+ ["appalachian-valley","Appalachian Valley","אפלצ'יאן ואלי · אייל, לגזעים קטנים","dog","#6D9296","טורקיז מעושן"],
+ ["pacific-stream-puppy","Pacific Stream Puppy","פסיפיק סטרים לגורים · סלמון מעושן","puppy","#DBDADA","לבן"],
+ ["high-prairie-puppy","High Prairie Puppy","היי פריירי לגורים · ביזון ואייל","puppy","#C56528","כתום"],
+ ["rocky-mountain","Rocky Mountain","רוקי מאונטן · אייל וסלמון","cat","#98BE7E","ירוק בהיר"],
+ ["canyon-river","Canyon River","קניון ריבר · פורל וסלמון מעושן","cat","#B78D50","חום קרמל"],
+ ["lowland-creek","Lowland Creek","לואולנד קריק · שליו וברווז צלוי","cat","#A88D8E","ורוד עתיק"]];
+const cans=[
+ ["pacific-stream","Pacific Stream","סלמון ברוטב"],["sierra-mountain","Sierra Mountain","כבש צלוי ברוטב"],
+ ["southwest-canyon","Southwest Canyon","בקר ברוטב"],["wetlands","Wetlands","ברווז בר ברוטב"],
+ ["salmon-turkey","Salmon & Turkey","סלמון והודו ברוטב"],["white-fish-tuna","White Fish & Tuna","דג לבן וטונה ברוטב"],
+ ["puppy-beef","Puppy Beef Stew","בקר ברוטב לגורים"]];
+const messages=[
+ "בשר טרי הוא המרכיב הראשון בכל מתכון.",
+ "ללא דגנים (Grain Free).",
+ "חלבונים מיוחדים מהטבע: ביזון, אייל, ברווז בר, סלמון מעושן.",
+ "עם פרה-ביוטיקה לתמיכה באיזון מערכת העיכול.",
+ "מיוצר בארצות הברית.",
+ "השראה מהתזונה הטבעית של הזאב והחתול הבר, בגרסה מודרנית ומאוזנת.",
+ "איכות פרימיום במחיר בר-השגה."];
+const kind={dog:"כלבים",puppy:"גורים",cat:"חתולים"};
+const esc=s=>s.replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const copyBtn=(v,label)=>`<button class="copy" type="button" data-copy="${esc(v)}">${esc(label||v)}</button>`;
+const sw=([hex,name,use])=>`<div class="card"><div class="sw" style="background:${hex};${hex==="#FFFFFF"?"border-bottom:1px solid var(--line)":""}"></div><div class="sw-body"><b>${name}</b><span>${use}</span>${copyBtn(hex)}</div></div>`;
+document.getElementById("sw-logo").innerHTML=logoColors.map(sw).join("");
+document.getElementById("sw-ui").innerHTML=uiColors.map(sw).join("");
+let filter="all",threeD=false;
+function renderBags(){
+  document.getElementById("bag-grid").innerHTML=bags.filter(b=>filter==="all"||b[3]===filter).map(([id,en,he,k,hex,cname])=>{
+    const src=(threeD?"bags3d/":"bags/")+id+".png";
+    return `<article class="card bag"><a class="pic" href="${H(src)}" target="_blank" rel="noopener" aria-label="פתיחת ${en} בגודל מלא"><img src="${U(src)}" alt="שקית ${en}" loading="lazy"></a><div class="band" style="background:${hex}"></div>
+    <div class="info"><div class="en">${en}</div><div class="he">${he}</div>
+    <div class="row"><span class="cname">${cname}</span>${copyBtn(hex)}<span class="tag">${kind[k]}</span></div>
+    <div class="row">${copyBtn("Taste of the Wild "+en,"העתקת שם באנגלית")}${copyBtn("טייסט אוף דה ווילד "+he.split(" · ")[0],"העתקת שם בעברית")}</div></div></article>`}).join("");
+}
+document.querySelectorAll(".filters [data-f]").forEach(b=>b.addEventListener("click",()=>{
+  filter=b.dataset.f;document.querySelectorAll(".filters [data-f]").forEach(x=>x.setAttribute("aria-pressed",x===b));renderBags();}));
+document.getElementById("view3d").addEventListener("click",e=>{threeD=!threeD;e.currentTarget.setAttribute("aria-pressed",threeD);renderBags();});
+renderBags();
+document.getElementById("can-grid").innerHTML=cans.map(([id,en,he])=>`<article class="card can"><a class="pic" href="${H('cans/'+id+'.png')}" target="_blank" rel="noopener" aria-label="פתיחת ${en} בגודל מלא"><img src="${U('cans/'+id+'.png')}" alt="פחית ${en}" loading="lazy"></a><div class="info"><div class="en">${en}</div><div class="he">${he}</div></div></article>`).join("");
+document.getElementById("msg-grid").innerHTML=messages.map(m=>`<div class="card msg"><p>${m}</p>${copyBtn(m,"העתקה")}</div>`).join("");
+document.addEventListener("click",e=>{
+  const b=e.target.closest("button.copy");if(!b)return;
+  const v=b.dataset.copy,orig=b.textContent;
+  const ok=()=>{b.classList.add("done");b.textContent="הועתק";setTimeout(()=>{b.classList.remove("done");b.textContent=orig},1300)};
+  const fallback=()=>{const r=document.createRange();r.selectNodeContents(b);const s=getSelection();s.removeAllRanges();s.addRange(r);};
+  try{navigator.clipboard.writeText(v).then(ok,fallback)}catch(err){fallback()}
+});
+</script>
+<script>document.querySelectorAll("[data-img]").forEach(i=>i.src=U(i.dataset.img));document.querySelectorAll("[data-href]").forEach(a=>a.href=H(a.dataset.href));</script>
+</body>
+</html>
