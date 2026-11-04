@@ -3,6 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="referrer" content="no-referrer">
 <title>ערכת מותג Taste of the Wild</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Suez+One&family=Frank+Ruhl+Libre:wght@400;500;700&family=Bree+Serif&family=Source+Serif+4:wght@400;600&family=Rubik:wght@400;500;600&display=swap">
@@ -95,6 +96,9 @@ button.copy.done{background:var(--bronze);color:#fff;border-color:var(--bronze)}
 .totop{position:fixed;inset-inline-end:max(16px,env(safe-area-inset-right,0px));bottom:max(16px,env(safe-area-inset-bottom,0px));width:48px;height:48px;border-radius:50%;border:2px solid var(--mast);background:var(--bronze);color:#121D27;font-size:22px;line-height:1;cursor:pointer;display:grid;place-items:center;box-shadow:0 4px 14px rgba(0,0,0,.25);opacity:0;pointer-events:none;transition:opacity .2s}
 .totop.show{opacity:1;pointer-events:auto}
 .totop:focus-visible{outline:2px solid var(--petrol);outline-offset:3px}
+img.img-missing{display:none}
+.img-fallback{display:grid;place-items:center;gap:6px;width:100%;height:100%;min-height:120px;padding:12px;text-align:center;font-family:var(--f-ui);font-size:13px;color:var(--muted);border:1px dashed var(--line);border-radius:10px}
+.img-fallback a{color:var(--petrol)}
 footer{padding-block:48px;color:var(--muted);font-family:var(--f-ui);font-size:13px}
 @media (prefers-reduced-motion:no-preference){button.copy{transition:background .15s,color .15s}}
 </style>
@@ -250,7 +254,21 @@ const IMG={
 "lineup.png":"https://lh3.googleusercontent.com/pw/AP1GczNB4G0ztw5oEcCBoNP-I-ntmpw2l_VIYpV9wsSzdX7M-nb6ow24csPbK47nP0HJ3FPu6LhYBNy1LKqAxcAm5RVZGDmazpjegUM0yjc2EkY_xV8us2Y",
 "logo":"https://lh3.googleusercontent.com/pw/AP1GczOjRXmFMD7HJgXd31lJqsU1qQAkxboORj3YkBVHTd35F6CM4zCfPPSET9HiTosPNi7m8_OnVrl_0s17mVTGdYFrO3jVY-vnsylN5AVvkA6XQCc2pwc",
 };
-const U=p=>IMG[p]+"=w900", H=p=>IMG[p]+"=w2000";
+/* Google Photos links can expire. Order: Google, then a local copy in the repo (same path as the key), then a placeholder. */
+const LOCAL=p=>/\.[a-z]+$/.test(p)?p:p+".png";
+const U=p=>IMG[p]?IMG[p]+"=w900":LOCAL(p), H=p=>IMG[p]?IMG[p]+"=w2000":LOCAL(p);
+const ALBUM="https://photos.app.goo.gl/esBa8eQ2ZGPsrN2r9";
+document.addEventListener("error",e=>{
+  const i=e.target;if(!(i instanceof HTMLImageElement))return;
+  const key=[...Object.keys(IMG)].find(k=>i.src.startsWith(IMG[k]));
+  if(key&&!i.dataset.triedLocal){i.dataset.triedLocal="1";i.src=LOCAL(key);
+    const a=i.closest("a");if(a)a.href=LOCAL(key);return;}
+  if(i.classList.contains("img-missing"))return;
+  i.classList.add("img-missing");
+  const f=document.createElement("span");f.className="img-fallback";
+  f.innerHTML='התמונה לא נטענה. <a href="'+ALBUM+'" target="_blank" rel="noopener">פתיחת אלבום התמונות</a>';
+  const host=i.closest("a.pic");(host||i).after(f);if(host)host.style.display="none";
+},true);
 </script>
 <script>
 const logoColors=[
